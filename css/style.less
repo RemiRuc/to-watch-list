@@ -1,0 +1,96 @@
+@rouge:#C90505;
+
+@font-face {
+    font-family: coco;
+    src: url(CocogoosePro-trial.ttf);
+}
+
+body, html{
+	margin:0;
+	font-family: 'coco';
+}
+#connexion, #inscription{
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	form{
+		display: flex;
+		flex-direction: column;
+		width: 273px;
+	}
+}
+header{
+	background-color: @rouge;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin : 0;
+	img{
+		margin: 0;
+		height: 50px;
+		width: auto;
+	}
+	a{
+		display: flex;
+		align-items: center;
+		height: 50px;
+		background-color: darken(@rouge,20%);
+		color: white;
+		text-decoration: none;
+		margin: 0;
+	}
+}
+h1{
+	text-align: center;
+}
+#liste{
+	ul{
+		list-style: none;
+		padding: 0;
+		li{
+			border-top: solid black 2px;
+			border-bottom: solid black 2px;
+			a{
+				padding: 10px 0px;
+				display: block;
+				text-align: center;
+				text-decoration: none;
+				font-size: 1.5em;
+
+			}
+		}
+	}
+}
+
+.episodeList{
+	padding: 20px;
+}
+
+.vu{
+	background-color: green;
+}
+
+.pasVu{
+	background-color: red;
+}
+
+#formSerie{
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	ul{
+		font-family: arial;
+		list-style: none;
+		padding:0;
+		li{
+			label{
+				padding-right: 10px;
+			}
+			input{
+				width: 35px;
+			}
+		}
+	}
+}
