@@ -27,16 +27,7 @@ if ( (isset($_SESSION['login'])) && (isset($_SESSION['id'])) ) {
         <meta charset="utf-8">
         <meta http-equiv="x-ua-compatible" content="ie=edge">
         <title>To watch list - Verfication</title>
-        <meta name="description" content="">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-
-        <link rel="manifest" href="site.webmanifest">
-        <link rel="apple-touch-icon" href="icon.png">
-        <!-- Place favicon.ico in the root directory -->
-
-        <link rel="stylesheet" href="css/normalize.css">
-        <link rel="stylesheet" href="css/main.css">
-        <link rel="stylesheet/less" type="text/css" href="css/style.less">
+        <?php include('templates/head.php') ?>
     </head>
     <body>
         <!--[if lte IE 9]>

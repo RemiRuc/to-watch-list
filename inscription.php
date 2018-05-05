@@ -54,7 +54,7 @@ if ( (isset($_SESSION['login'])) && (isset($_SESSION['id'])) ) {
 <html>
 <head>
 	<title>ToWatchList - Inscription</title>
-	<link rel="stylesheet" type="text/css" href="css/style.css">
+	<?php include('templates/head.php') ?>
 	<meta charset="utf-8">
 </head>
 <body>

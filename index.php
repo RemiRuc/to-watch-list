@@ -38,7 +38,7 @@ if (isset($_GET['subscribe'])) {
 <html>
 <head>
 	<title>To Watch List</title>
-	<link rel="stylesheet" type="text/css" href="css/style.css">
+    <?php include('templates/head.php') ?>
 	<meta charset="utf-8">
 </head>
 <body>
