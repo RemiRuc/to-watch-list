@@ -41,10 +41,7 @@ include('templates/bdd.php');
 	<meta charset="utf-8">
 </head>
 <body>
-	<header>
-		<img src="img/toWatchListLogo.png">
-		<a href="deconnexion.php">Se déconnecter</a>
-	</header>
+	<?php include ('templates/header.php'); ?>
 	<form id="formSerie" method="post" action="createserie.php?attempt=ok">
 		<div id="infoSerieForm">
 			<label>Nom de la serie :</label>

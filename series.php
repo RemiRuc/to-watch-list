@@ -23,10 +23,7 @@ include('templates/bdd.php');
 	<meta charset="utf-8">
 </head>
 <body>
-	<header>
-		<img src="img/toWatchListLogo.png">
-		<a href="deconnexion.php">Se déconnecter</a>
-	</header>
+	<?php include ('templates/header.php'); ?>
 	<h1><?php echo $titre['titre']; ?> !</h1>
 	<div id="liste">
 		<ul>
