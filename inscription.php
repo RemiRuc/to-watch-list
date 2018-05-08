@@ -41,12 +41,12 @@ if ( (isset($_SESSION['login'])) && (isset($_SESSION['id'])) ) {
                                    ";
                                     mail($mail, 'To watch list - Verification de compte', $mailBody,$header);
                                     header('Location: index.php?subscribe=done');
-                            } else {$messageMail="Ce mail à déjà été pris";}
-                        } else {$messageLogin="Ce pseudo à déjà été pris";}
-                   } else {$messagePasswordRepeat="Les 2 mots de passes ne sont pas identiques";}
-               } else {$messageMail="Veuillez entrer une adresse mail valide";}
-           }  else {$messagePassword="Le mot de passe doit contenir entre 4 et 20 caractères";}
-       } else {$messageLogin="Le pseudo doit contenir entre 4 et 20 caractères";}
+                            } else {$messageMail="Ce mail à déjà été pris"; echo '<div class="error"><i class="fas fa-ban"></i>'.$messageMail.'</div>';}
+                        } else {$messageLogin="Ce pseudo à déjà été pris"; echo '<div class="error"><i class="fas fa-ban"></i>'.$messageLogin.'</div>';}
+                   } else {$messagePasswordRepeat="Les 2 mots de passes ne sont pas identiques"; echo '<div class="error"><i class="fas fa-ban"></i>'.$messagePasswordRepeat.'</div>';}
+               } else {$messageMail="Veuillez entrer une adresse mail valide"; echo '<div class="error"><i class="fas fa-ban"></i>'.$messageMail.'</div>';}
+           }  else {$messagePassword="Le mot de passe doit contenir entre 4 et 20 caractères"; echo '<div class="error"><i class="fas fa-ban"></i>'.$messagePassword.'</div>';}
+       } else {$messageLogin="Le pseudo doit contenir entre 4 et 20 caractères"; echo '<div class="error"><i class="fas fa-ban"></i>'.$messageLogin.'</div>';}
     }
 ?>
 
@@ -54,7 +54,7 @@ if ( (isset($_SESSION['login'])) && (isset($_SESSION['id'])) ) {
 <html>
 <head>
 	<title>ToWatchList - Inscription</title>
-	<?php include('templates/head.php') ?>
+	<?php include('templates/head.php'); ?>
 	<meta charset="utf-8">
 </head>
 <body>
@@ -73,7 +73,6 @@ if ( (isset($_SESSION['login'])) && (isset($_SESSION['id'])) ) {
 			<a href="index.php">Retour à la page connexion</a>
 		</form>
 	</section>
-
 </body>
 </html>
 
