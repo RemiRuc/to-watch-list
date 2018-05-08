@@ -18,20 +18,48 @@ include('templates/bdd.php');
 		<div id="liste">
 
 		<?php 
+		$requete = $bdd->prepare('SELECT * FROM series WHERE idUser=:idUser');
+		$requete->execute(array('idUser' => $_SESSION["id"]));
+		$series=$requete->fetchAll();
 
-		$requete = "SELECT * FROM series WHERE idUser='".$_SESSION["id"]."'";
-		$reponse = $bdd->query($requete);
-		$nbLignes = $bdd->query("SELECT count(*) AS nb FROM series WHERE idUser='".$_SESSION["id"]."'");
-		$nbLigne = $nbLignes->fetch();
-
-		if ($nbLigne['nb']==0) {
+		if (count($series)==0) {
 			echo "<a href='createserie.php'>Créer votre première série !</a>";
 		} else {
-			echo "<ul>";
-			while($donnees = $reponse->fetch()){
-				echo "<li><a href=series.php?id=".$donnees['idSerie'].">".$donnees['nomSerie']."</a></li>";	
+			?>
+	<table>
+		<thead> <!-- En-tête du tableau -->
+		   	<tr>
+		   	    <th>Serie</th>
+		   	    <th>Avancement</th>
+			    <th>Modifier</th>
+			    <th>Supprimer</th>
+			</tr>
+		</thead>
+		<tbody>
+			 <?php
+			foreach($series as $serie){
+				$requete2 = $bdd->prepare('SELECT count(*) as total FROM `episodes` WHERE `idSerie`=:idSerie GROUP BY vu');
+				$requete2->execute(array('idSerie' => $serie['idSerie']));
+				$requetTab=$requete2->fetchAll();
+				$vu=$requetTab[1]['total'];
+				$pasVu=$requetTab[0]['total'];
+				$total=$vu+$pasVu;
+
+
+				?>
+			<tr>
+	           <td><a href="series.php?id=<?php echo $serie['idSerie'] ?>"><?php echo $serie['nomSerie'] ?></a></td>
+	           <td><?php echo $vu."/".$total; ?></td>
+	           <td>Modifier</td>
+	           <td>Supprimer</td>
+	       </tr>
+				<?php
+				//echo "<li><a href=series.php?id=".$serie['idSerie'].">".$serie['nomSerie']."</a></li>";	
 			}
-			echo "</ul>";
+			?>
+		</tbody>
+	</table>
+			<?php
 		}
 
 		?>
