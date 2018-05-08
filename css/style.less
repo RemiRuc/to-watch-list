@@ -11,7 +11,7 @@
 }
 
 body, html{
-	height: 100%;
+	min-height: 100vh;
 	margin:0;
 	font-family: 'aurea';
 }
@@ -174,10 +174,12 @@ h1{
 /*****************index.php*********************/
 .index{
 	height: 100%;
+	position: relative;
 	background: url('/img/bg.jpg');
 	-webkit-background-size: cover; /* pour anciens Chrome et Safari */
 	background-size: cover; /* version standardisée */
-	    display: flex;
+	display: flex;
+	flex-direction: column;
     justify-content: center;
     align-items: center;
 }
@@ -185,8 +187,8 @@ h1{
 	position: absolute;
 	top: 0;
 	left: 0;
-	bottom: 0;
-	right: 0;
+	width: 100%;
+    height: inherit;
 	z-index: -1;
 	background-color: @rouge;
 	opacity: 0.5;
