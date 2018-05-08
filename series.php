@@ -43,15 +43,60 @@ include('templates/bdd.php');
 				echo "<h2>saison ".$actualSeason."</h2>";
 			}
 			if ($episode['vu']==0) {
-				echo "<li class='episodeList pasVu'>Episode ".$episode['numEpisode']."</li>";
+				echo "<li id='".$episode['numEpisode']."' class='episodeList pasVu'>Episode ".$episode['numEpisode']."</li>";
 			} else {
-				echo "<li class='episodeList vu'>Episode ".$episode['numEpisode']."</li>";
+				echo "<li id='".$episode['numEpisode']."' class='episodeList vu'>Episode ".$episode['numEpisode']."</li>";
 			}
 		}
 		?>
 		</ul>		
 
 	</div>
+
+
+	<script type="text/javascript">
+		var idSerie=<?php echo $_GET['id']; ?>;
+		$(".episodeList").click(function(){
+			var classList=this.classList;
+			var idEpisode=this.id;
+			var html=this;
+			
+			for (var i = classList.length - 1; i >= 0; i--) {
+				if (classList[i]=='vu') {
+					toggleVu(html, idSerie, idEpisode, 0);
+
+				} else if(classList[i]=='pasVu') {
+					toggleVu(html, idSerie, idEpisode, 1);
+				}
+			}
+
+    		function toggleVu(html, idSerie, idEpisode, vu){
+    			$.ajax({
+			       url : 'toggleVu.php',
+			       type : 'POST',
+			       data : {'idEpisode':idEpisode, 'idSerie':idSerie, 'vu':vu,},
+			       success : function(code_html, statut){
+			        	if (vu===0) {
+			        		html.classList.remove('vu');
+							html.classList.add('pasVu');
+			        	} else if (vu===1){
+			        		html.classList.remove('pasVu');
+							html.classList.add('vu');
+			        	}
+			       },
+
+			       error : function(resultat, statut, erreur){
+			         
+			       },
+
+			       complete : function(resultat, statut){
+
+			       }
+
+			    });
+    		}
+		});
+	</script>
 
 </body>
 </html>
