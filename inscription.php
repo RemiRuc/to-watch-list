@@ -57,7 +57,8 @@ if ( (isset($_SESSION['login'])) && (isset($_SESSION['id'])) ) {
 	<?php include('templates/head.php'); ?>
 	<meta charset="utf-8">
 </head>
-<body>
+<body class="index">
+  <div class="cache"></div>
 	<section id="inscription">
 		<img src="img/toWatchListLogo.png">
 		<form method="post" action="Inscription.php">
@@ -70,8 +71,8 @@ if ( (isset($_SESSION['login'])) && (isset($_SESSION['id'])) ) {
 			<label for="mdp2Ins">Répétez le mot de passe</label>
 			<input type="password" name="passwordRepeat">
 			<input type="submit" name="btInscription">
-			<a href="index.php">Retour à la page connexion</a>
 		</form>
+    <a href="index.php">Retour à la page connexion</a>
 	</section>
 </body>
 </html>
