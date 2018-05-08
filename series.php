@@ -3,15 +3,23 @@ session_start();
 include('templates/check.php');
 include('templates/bdd.php');
 
-	$requete = "SELECT * FROM episodes WHERE idSerie=".$_GET["id"];
+	if (!isset($_GET["id"])){
+		header('Location: user.php');
+	}
+
+	//$requete = "SELECT * FROM episodes WHERE idSerie=".$_GET["id"];
 	$requeteTitre = "SELECT nomSerie AS titre FROM series WHERE idSerie='".$_GET["id"]."'";
-	$reponse = $bdd->query($requete);
+	//$reponse = $bdd->query($requete);
 	$reponseTitre = $bdd->query($requeteTitre);
 	$titre=$reponseTitre->fetch();
-	$verif = $reponse->fetch();
-	if ($verif==false) {
+
+	$requete = $bdd->prepare('SELECT * FROM episodes WHERE idSerie=:id');
+	$requete->execute(array('id' => $_GET['id']));
+
+	$episodes=$requete->fetchAll();
+
+	if (count($episodes)===0) {
 		header('Location: user.php');
-		exit();
 	} else {
 
 ?>
@@ -28,16 +36,20 @@ include('templates/bdd.php');
 	<div id="liste">
 		<ul>
 			<?php
-		while($donnees = $reponse->fetch()){
-			/*if ($donnees['vu']==0) {*/
-				echo "<li class='episodeList pasVu'>Episode ".$donnees['numEpisode']."</li>";
-			/*} else {
-				echo "<li class='episodeList vu'>Episode ".$donnees['numEpisode']."</li>";
-			}*/
+			$actualSeason=1;
+		foreach($episodes as $episode){
+			if ($episode['saison']!==$actualSeason) {
+				$actualSeason=$episode['saison'];
+				echo "<h2>saison ".$actualSeason."</h2>";
+			}
+			if ($episode['vu']==0) {
+				echo "<li class='episodeList pasVu'>Episode ".$episode['numEpisode']."</li>";
+			} else {
+				echo "<li class='episodeList vu'>Episode ".$episode['numEpisode']."</li>";
+			}
 		}
 		?>
-		</ul>
-			
+		</ul>		
 
 	</div>
 
