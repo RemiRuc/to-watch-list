@@ -41,12 +41,12 @@ if ( (isset($_SESSION['login'])) && (isset($_SESSION['id'])) ) {
                                    ";
                                     mail($mail, 'To watch list - Verification de compte', $mailBody,$header);
                                     header('Location: index.php?subscribe=done');
-                            } else {$messageMail="Ce mail à déjà été pris"; echo '<div class="error"><i class="fas fa-ban"></i>'.$messageMail.'</div>';}
-                        } else {$messageLogin="Ce pseudo à déjà été pris"; echo '<div class="error"><i class="fas fa-ban"></i>'.$messageLogin.'</div>';}
-                   } else {$messagePasswordRepeat="Les 2 mots de passes ne sont pas identiques"; echo '<div class="error"><i class="fas fa-ban"></i>'.$messagePasswordRepeat.'</div>';}
-               } else {$messageMail="Veuillez entrer une adresse mail valide"; echo '<div class="error"><i class="fas fa-ban"></i>'.$messageMail.'</div>';}
-           }  else {$messagePassword="Le mot de passe doit contenir entre 4 et 20 caractères"; echo '<div class="error"><i class="fas fa-ban"></i>'.$messagePassword.'</div>';}
-       } else {$messageLogin="Le pseudo doit contenir entre 4 et 20 caractères"; echo '<div class="error"><i class="fas fa-ban"></i>'.$messageLogin.'</div>';}
+                            } else {$messageMail="Ce mail à déjà été pris"; echo '<div class="error"><i class="fas fa-times"></i> '.$messageMail.'</div>';}
+                        } else {$messageLogin="Ce pseudo à déjà été pris"; echo '<div class="error"><i class="fas fa-times"></i> '.$messageLogin.'</div>';}
+                   } else {$messagePasswordRepeat="Les 2 mots de passes ne sont pas identiques"; echo '<div class="error"><i class="fas fa-times"></i> '.$messagePasswordRepeat.'</div>';}
+               } else {$messageMail="Veuillez entrer une adresse mail valide"; echo '<div class="error"><i class="fas fa-times"></i> '.$messageMail.'</div>';}
+           }  else {$messagePassword="Le mot de passe doit contenir entre 4 et 20 caractères"; echo '<div class="error"><i class="fas fa-times"></i> '.$messagePassword.'</div>';}
+       } else {$messageLogin="Le pseudo doit contenir entre 4 et 20 caractères"; echo '<div class="error"><i class="fas fa-times"></i> '.$messageLogin.'</div>';}
     }
 ?>
 
