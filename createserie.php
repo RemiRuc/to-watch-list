@@ -29,7 +29,7 @@ include('templates/bdd.php');
 					$req2->execute(array('idSerie' => $serieId, 'idUser' => $_SESSION['id'], 'saison' => $saison, 'numEpisode' => $numeroEpisode));
 				}
 			}
-		}
+		}else{$message="Veuillez remplir tous les champs du formulaire";}
 	}
 		
 	?>
@@ -37,10 +37,13 @@ include('templates/bdd.php');
 <html>
 <head>
 	<title>To Watch List - Creer une serie</title>
-	<?php include('templates/head.php') ?>
+	<?php include('templates/head.php'); ?>
 	<meta charset="utf-8">
 </head>
 <body>
+	<?php if (isset($message)) {
+	    echo '<div class="error alert_pages"><i class="fas fa-times"></i> '.$message.'</div>';
+	} ?>
 	<?php include ('templates/header.php'); ?>
 	<form id="formSerie" method="post" action="createserie.php?attempt=ok">
 		<div id="infoSerieForm">
