@@ -41,12 +41,12 @@ if ( (isset($_SESSION['login'])) && (isset($_SESSION['id'])) ) {
                                    ";
                                     mail($mail, 'To watch list - Verification de compte', $mailBody,$header);
                                     header('Location: index.php?subscribe=done');
-                            } else {$messageMail="Ce mail à déjà été pris"; echo '<div class="error"><i class="fas fa-times"></i> '.$messageMail.'</div>';}
-                        } else {$messageLogin="Ce pseudo à déjà été pris"; echo '<div class="error"><i class="fas fa-times"></i> '.$messageLogin.'</div>';}
-                   } else {$messagePasswordRepeat="Les 2 mots de passes ne sont pas identiques"; echo '<div class="error"><i class="fas fa-times"></i> '.$messagePasswordRepeat.'</div>';}
-               } else {$messageMail="Veuillez entrer une adresse mail valide"; echo '<div class="error"><i class="fas fa-times"></i> '.$messageMail.'</div>';}
-           }  else {$messagePassword="Le mot de passe doit contenir entre 4 et 20 caractères"; echo '<div class="error"><i class="fas fa-times"></i> '.$messagePassword.'</div>';}
-       } else {$messageLogin="Le pseudo doit contenir entre 4 et 20 caractères"; echo '<div class="error"><i class="fas fa-times"></i> '.$messageLogin.'</div>';}
+                            } else {$message="Ce mail à déjà été pris";}
+                        } else {$message="Ce pseudo à déjà été pris";}
+                   } else {$message="Les 2 mots de passes ne sont pas identiques";}
+               } else {$message="Veuillez entrer une adresse mail valide";}
+           }  else {$message="Le mot de passe doit contenir entre 4 et 20 caractères";}
+       } else {$message="Le pseudo doit contenir entre 4 et 20 caractères";}
     }
 ?>
 
@@ -57,7 +57,11 @@ if ( (isset($_SESSION['login'])) && (isset($_SESSION['id'])) ) {
 	<?php include('templates/head.php'); ?>
 	<meta charset="utf-8">
 </head>
-<body>
+<body class="index">
+  <div class="cache"></div>
+  <?php if (isset($message)) {
+      echo '<div class="error"><i class="fas fa-times"></i> '.$message.'</div>';
+  } ?>
 	<section id="inscription">
 		<img src="img/toWatchListLogo.png">
 		<form method="post" action="Inscription.php">
@@ -70,8 +74,8 @@ if ( (isset($_SESSION['login'])) && (isset($_SESSION['id'])) ) {
 			<label for="mdp2Ins">Répétez le mot de passe</label>
 			<input type="password" name="passwordRepeat">
 			<input type="submit" name="btInscription">
-			<a href="index.php">Retour à la page connexion</a>
 		</form>
+    <a href="index.php">Retour à la page connexion</a>
 	</section>
 </body>
 </html>

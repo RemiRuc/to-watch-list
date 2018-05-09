@@ -41,14 +41,13 @@ if (isset($_GET['subscribe'])) {
     <?php include('templates/head.php') ?>
 	<meta charset="utf-8">
 </head>
-<body>
+<body class="index">
+    <div class="cache"></div>
 	<section id="connexion">
 		<img src="img/toWatchListLogo.png">
 		<form method="post" action="index.php">
-			<label for="pseudoConnexion">Pseudo :</label>
-			<input type="text" name="login">
-			<label for="mdpConnexion">Mot de passe :</label>
-			<input type="password" name="password">
+			<input placeholder="Pseudo" type="text" name="login">
+			<input placeholder="Mot de passe" type="password" name="password">
 			<input type="submit" name="btConnexion">
 			<?php if (isset($message)) {echo $message;} ?>
 		</form>
