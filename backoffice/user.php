@@ -61,8 +61,7 @@ include('../templates/bdd.php');
             echo "<tr>";
                 echo "<td>".$serie['nomSerie']."</td>";
                 echo "<td>".$vu."/".$total."</td>";
-                echo "<td>".$user['mail']."</td>";
-                echo "<td><a href='remove.php?idSerie=".$user['idUser']."'>Supprimer</a></td>";
+                echo "<td><a href='remove.php?idSerie=".$serie['idSerie']."'>Supprimer</a></td>";
             echo "</tr>";
         }
       }
