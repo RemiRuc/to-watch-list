@@ -38,11 +38,26 @@ include('templates/bdd.php');
 		<tbody>
 			 <?php
 			foreach($series as $serie){
-				$requete2 = $bdd->prepare('SELECT count(*) as total FROM `episodes` WHERE `idSerie`=:idSerie GROUP BY vu');
+				$requete2 = $bdd->prepare('SELECT vu, count(*) as total FROM `episodes` WHERE `idSerie`=:idSerie GROUP BY vu');
 				$requete2->execute(array('idSerie' => $serie['idSerie']));
 				$requetTab=$requete2->fetchAll();
-				$vu=$requetTab[1]['total'];
-				$pasVu=$requetTab[0]['total'];
+				foreach ($requetTab as $key) {
+					if (count($requetTab)<2) {
+						if ($key['vu']==1) {
+							$vu=$key['total'];
+							$pasVu=0;
+						} else {
+							$vu=0;
+							$pasVu=$key['total'];
+						}
+					} else {
+						if ($key['vu']==1) {
+							$vu=$key['total'];
+						} else {
+							$pasVu=$key['total'];
+						}
+					}
+				}
 				$total=$vu+$pasVu;
 
 
