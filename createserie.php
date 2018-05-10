@@ -6,7 +6,7 @@ include('templates/bdd.php');
 
 	<?php
 	if (isset($_GET['attempt'])) {
-		if ((isset($_POST['nomSerie']))&&(isset($_POST['nbrSaison']))&&(isset($_POST['saison1']))&&(isset($_SESSION['id']))) {
+		if ((isset($_POST['nomSerie']))&&(isset($_POST['nbrSaison']))&&(isset($_POST['saison1']))&&(isset($_SESSION['id']))&&(isset($_FILES['image']))&&(isset($_FILES['image']['name']))) {
 			$nom=$_POST['nomSerie'];
 			$nbrSaison=$_POST['nbrSaison'];
 			for ($i=0; $i < $nbrSaison; $i++) {
@@ -16,9 +16,24 @@ include('templates/bdd.php');
 					$nbrEpisodes[]=$_POST["saison".($i+1)];
 				}
 			}
+			$tailleMax=2097152;
+			$extensionsValides= array('jpg','jpeg','png','gif');
+			if ($_FILES['image']['size']<=$tailleMax) {
+				$extensionUpload = strtolower(substr(strrchr($_FILES['image']['name'], '.'), 1));
+				if (in_array($extensionUpload, $extensionsValides)) {
+					$lien="img/series/".$_FILES['image']['name'];
+					$resultat = move_uploaded_file($_FILES['image']['tmp_name'], $lien);
+					if ($resultat) {
+						$lien="img/series/".$_FILES['image']['name'];
+						$sql= $bdd->prepare("INSERT INTO `image`(`lien`) VALUES ('$lien')");
+						$sql->execute();
+						$imageId=$bdd->lastInsertId();
+					} else {$message="Erreur lors de l'importation.";}
+				} else {$message= "Le type de fichier n'est pas bon";}
+			} else {$message= "Votre photo est trop grande";}
 
-			$req = $bdd->prepare('INSERT INTO series(nomSerie, idUser) VALUES(:nomSerie, :idUser)');
-			$req->execute(array('nomSerie' => $nom, 'idUser' => $_SESSION['id']));
+			$req = $bdd->prepare('INSERT INTO series(nomSerie, idUser, idImage) VALUES(:nomSerie, :idUser, :idImage)');
+			$req->execute(array('nomSerie' => $nom, 'idUser' => $_SESSION['id'], 'idImage' => $imageId));
 			$serieId=$bdd->lastInsertId();
 			$numeroEpisode=0;
 			$req2 = $bdd->prepare('INSERT INTO episodes(idSerie, idUser, saison, numEpisode) VALUES(:idSerie, :idUser, :saison, :numEpisode)');
@@ -45,10 +60,12 @@ include('templates/bdd.php');
 	    echo '<div class="error alert_pages"><i class="fas fa-times"></i> '.$message.'</div>';
 	} ?>
 	<?php include ('templates/header.php'); ?>
-	<form id="formSerie" method="post" action="createserie.php?attempt=ok">
+	<form id="formSerie" method="post" action="createserie.php?attempt=ok" enctype="multipart/form-data">
 		<div id="infoSerieForm">
 			<label>Nom de la serie :</label>
 			<input type="text" name="nomSerie">
+			<label>Image de la serie :</label>
+			<input type="file" name="image"><br><br>
 			<label>Nombre de saison :</label>
 			<select id="nbrSaison" name="nbrSaison">
 				<option value="1">1</option>
