@@ -6,7 +6,7 @@ include('templates/bdd.php');
 
 	<?php
 	if (isset($_GET['attempt'])) {
-		if ((isset($_POST['nomSerie']))&&(isset($_POST['nbrSaison']))&&(isset($_POST['saison1']))&&(isset($_SESSION['id']))&&(isset($_POST['image']))&&(isset($_FILES['image']['name']))) {
+		if ((isset($_POST['nomSerie']))&&(isset($_POST['nbrSaison']))&&(isset($_POST['saison1']))&&(isset($_SESSION['id']))&&(isset($_FILES['image']))&& (isset($_FILES['image']['name'])) && (!empty($_POST['nomSerie']))) {
 			$nom=$_POST['nomSerie'];
 			$nbrSaison=$_POST['nbrSaison'];
 			for ($i=0; $i < $nbrSaison; $i++) {
@@ -28,22 +28,26 @@ include('templates/bdd.php');
 						$sql= $bdd->prepare("INSERT INTO `image`(`lien`) VALUES ('$lien')");
 						$sql->execute();
 						$imageId=$bdd->lastInsertId();
+
+						$req = $bdd->prepare('INSERT INTO series(nomSerie, idUser, idImage) VALUES(:nomSerie, :idUser, :idImage)');
+						$req->execute(array('nomSerie' => $nom, 'idUser' => $_SESSION['id'], 'idImage' => $imageId));
+						$serieId=$bdd->lastInsertId();
+						$numeroEpisode=0;
+						$req2 = $bdd->prepare('INSERT INTO episodes(idSerie, idUser, saison, numEpisode) VALUES(:idSerie, :idUser, :saison, :numEpisode)');
+						for ($i=0; $i < $nbrSaison; $i++) { 
+							for ($j=0; $j < $nbrEpisodes[$i]; $j++) {
+								$numeroEpisode++;
+								$saison=$i+1;
+								$req2->execute(array('idSerie' => $serieId, 'idUser' => $_SESSION['id'], 'saison' => $saison, 'numEpisode' => $numeroEpisode));
+							}
+						}
+						header('Location: user.php');
+
+
+
 					} else {$message="Erreur lors de l'importation.";}
 				} else {$message= "Le type de fichier n'est pas bon";}
 			} else {$message= "Votre photo est trop grande";}
-
-			$req = $bdd->prepare('INSERT INTO series(nomSerie, idUser, idImage) VALUES(:nomSerie, :idUser, :idImage)');
-			$req->execute(array('nomSerie' => $nom, 'idUser' => $_SESSION['id'], 'idImage' => $imageId));
-			$serieId=$bdd->lastInsertId();
-			$numeroEpisode=0;
-			$req2 = $bdd->prepare('INSERT INTO episodes(idSerie, idUser, saison, numEpisode) VALUES(:idSerie, :idUser, :saison, :numEpisode)');
-			for ($i=0; $i < $nbrSaison; $i++) { 
-				for ($j=0; $j < $nbrEpisodes[$i]; $j++) {
-					$numeroEpisode++;
-					$saison=$i+1;
-					$req2->execute(array('idSerie' => $serieId, 'idUser' => $_SESSION['id'], 'saison' => $saison, 'numEpisode' => $numeroEpisode));
-				}
-			}
 		}else{$message="Veuillez remplir tous les champs du formulaire";}
 	}
 		
