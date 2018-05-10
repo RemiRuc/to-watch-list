@@ -27,7 +27,7 @@ include('templates/bdd.php');
 <html>
 <head>
 	<title><?php echo $titre['titre']; ?></title>
-	<?php include('templates/head.php') ?>
+	<?php include('templates/head.php'); ?>
 	<meta charset="utf-8">
 </head>
 <body>
