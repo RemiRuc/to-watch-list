@@ -6,11 +6,11 @@ include('templates/bdd.php');
 
 	<?php
 	if (isset($_GET['attempt'])) {
-		if ((isset($_POST['nomSerie']))&&(isset($_POST['nbrSaison']))&&(isset($_POST['saison1']))&&(isset($_SESSION['id']))&&(isset($_FILES['image']))&&(isset($_FILES['image']['name']))) {
+		if ((isset($_POST['nomSerie']))&&(isset($_POST['nbrSaison']))&&(isset($_POST['saison1']))&&(isset($_SESSION['id']))&&(isset($_POST['image']))&&(isset($_FILES['image']['name']))) {
 			$nom=$_POST['nomSerie'];
 			$nbrSaison=$_POST['nbrSaison'];
 			for ($i=0; $i < $nbrSaison; $i++) {
-				if (($_POST["saison".($i+1)]==0)||(is_null($_POST["saison".($i+1)]))) {
+				if (!isset($_POST["saison".($i+1)])) {
 					$nbrEpisodes[]=1;
 				} else {
 					$nbrEpisodes[]=$_POST["saison".($i+1)];
@@ -56,10 +56,10 @@ include('templates/bdd.php');
 	<meta charset="utf-8">
 </head>
 <body>
+	<?php include ('templates/header.php'); ?>
 	<?php if (isset($message)) {
 	    echo '<div class="error alert_pages"><i class="fas fa-times"></i> '.$message.'</div>';
 	} ?>
-	<?php include ('templates/header.php'); ?>
 	<form id="formSerie" method="post" action="createserie.php?attempt=ok" enctype="multipart/form-data">
 		<div id="infoSerieForm">
 			<label>Nom de la serie :</label>

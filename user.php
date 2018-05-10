@@ -66,7 +66,7 @@ include('templates/bdd.php');
 	           <td><a href="series.php?id=<?php echo $serie['idSerie'] ?>"><?php echo $serie['nomSerie'] ?></a></td>
 	           <td><?php echo $vu."/".$total; ?></td>
 	           <td>Modifier</td>
-	           <td>Supprimer</td>
+	           <td><a href="removeserie.php?id=<?php echo $serie['idSerie'] ?>">Supprimer</a></td>
 	       </tr>
 				<?php
 				//echo "<li><a href=series.php?id=".$serie['idSerie'].">".$serie['nomSerie']."</a></li>";	
