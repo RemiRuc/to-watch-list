@@ -153,27 +153,82 @@ h1{
 }
 
 #formSerie{
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	justify-content: center;
+	z-index: 1;
+	background: white;
+    padding: 70px 30px;
+    border-radius: 50px;
+	    font-size: 1.5em;
+	label{
+	    display: block;
+    	text-align: center;
+        flex-shrink: 0;
+	}
+	input{
+		font-family: 'aurea';
+		margin-bottom: 0;
+	}
+	select{
+		font-family: 'aurea';
+	}
+	p{
+		text-align: center;
+	    flex-shrink: 0;
+	}
+	input[type="file"]{
+		display: none;
+	}
+	input[type="submit"]{
+		margin: auto;
+    	display: block;
+	}
+	>div{
+		display: flex;
+		align-items: center;
+	}
+	#imgInpLabel {
+		margin: auto;
+		font-size: 0.8em;
+	    cursor: pointer;
+	    color: #00b1ca;
+	    font-weight: bold;
+	    padding: 20px 0px;
+	    &:hover{
+	    	color: #25a5c4;
+	    	text-decoration: underline;
+	    }
+	}
 	ul{
-		font-family: arial;
 		list-style: none;
 		padding:0;
+		display: flex;
+	    flex-wrap: wrap;
+	    width: 378px;
+	    justify-content: center;
 		li{
+			background-color: gainsboro;
+		    padding: 10px;
+		    border-radius: 20px;
+		    margin: 10px 5px;
 			label{
-				padding-right: 10px;
+				display: block;
+    			text-align: center;
 			}
 			input{
 				width: 35px;
+				
+				width: 55px;
+				font-size:1em;
+
+			}
+			>div{
+			    display: flex;
+    			align-items: baseline;
 			}
 		}
 	}
 }
 /*****************index.php*********************/
-.index{
-	height: 100%;
+.index, .user{
 	position: relative;
 	background: url('/img/bg.jpg');
 	-webkit-background-size: cover; /* pour anciens Chrome et Safari */
@@ -183,13 +238,20 @@ h1{
     justify-content: center;
     align-items: center;
 }
+
+.index{
+	min-height: 100vh;
+}
+
+.user{
+	min-height: calc(100vh - 70px);
+}
 .cache{
 	position: absolute;
 	top: 0;
 	left: 0;
 	width: 100%;
-    height: inherit;
-	z-index: -1;
+    height: 100%;
 	background-color: @rouge;
 	opacity: 0.5;
 }
@@ -220,7 +282,7 @@ h1{
 	background-color: #FFBABA;
 }
 .alert_pages{
-	position: absolute;
+    z-index: 1;
 	margin-left: 20%;
 }
 /****************user.php*******************/
