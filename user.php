@@ -27,15 +27,27 @@ include('templates/bdd.php');
 			?>
 				<?php
 					foreach($series as $serie){
-						$requete2 = $bdd->prepare('SELECT count(*) as total FROM `episodes` WHERE `idSerie`=:idSerie GROUP BY vu');
+						$requete2 = $bdd->prepare('SELECT vu, count(*) as total FROM `episodes` WHERE `idSerie`=:idSerie GROUP BY vu');
 						$requete2->execute(array('idSerie' => $serie['idSerie']));
 						$requetTab=$requete2->fetchAll();
-						$vu=$requetTab[1]['total'];
-						$pasVu=$requetTab[0]['total'];
-						$total=$vu+$pasVu;
-						if ($vu == 0) {
-							$vu=0;
+						foreach ($requetTab as $key) {
+							if (count($requetTab)<2) {
+								if ($key['vu']==1) {
+									$vu=$key['total'];
+									$pasVu=0;
+								} else {
+									$vu=0;
+									$pasVu=$key['total'];
+								}
+							} else {
+								if ($key['vu']==1) {
+									$vu=$key['total'];
+								} else {
+									$pasVu=$key['total'];
+								}
+							}
 						}
+						$total=$vu+$pasVu;
 
 						$requete3 = $bdd->prepare('SELECT * FROM `image` WHERE `idImage`= :idImage');
 						$requete3->execute(array('idImage' => $serie['idImage']));
@@ -52,7 +64,7 @@ include('templates/bdd.php');
 	                    	<h3><?php echo $vu."/".$total; ?></h3>
 	                    	<div class="series-modif">
 	                    		<a href="#"><i class="fas fa-edit"></i></a>
-		                    	<a href="#"><i class="fas fa-trash-alt"></i></a>
+		                    	<a href="removeserie.php?id=<?php echo $serie['idSerie'] ?>"><i class="fas fa-trash-alt"></i></a>
 	                    	</div>
 	                    </div>
 					</div>
@@ -72,40 +84,6 @@ include('templates/bdd.php');
 	                    </div>
 					</div>
 				</div>
-
-				<!-- <table>
-					<thead> 
-					   	<tr>
-					   	    <th>Serie</th>
-					   	    <th>Avancement</th>
-						    <th>Modifier</th>
-						    <th>Supprimer</th>
-						</tr>
-					</thead>
-					<tbody>
-						 <?php
-						foreach($series as $serie){
-							$requete2 = $bdd->prepare('SELECT count(*) as total FROM `episodes` WHERE `idSerie`=:idSerie GROUP BY vu');
-							$requete2->execute(array('idSerie' => $serie['idSerie']));
-							$requetTab=$requete2->fetchAll();
-							$vu=$requetTab[1]['total'];
-							$pasVu=$requetTab[0]['total'];
-							$total=$vu+$pasVu;
-
-
-							?>
-						<tr>
-				           <td><a href="series.php?id=<?php echo $serie['idSerie'] ?>"><?php echo $serie['nomSerie'] ?></a></td>
-				           <td><?php echo $vu."/".$total; ?></td>
-				           <td>Modifier</td>
-				           <td>Supprimer</td>
-				       </tr>
-							<?php
-							//echo "<li><a href=series.php?id=".$serie['idSerie'].">".$serie['nomSerie']."</a></li>";	
-						}
-						?>
-					</tbody>
-				</table> -->
 			<?php
 			}
 
