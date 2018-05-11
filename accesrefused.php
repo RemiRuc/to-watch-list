@@ -14,7 +14,7 @@ include('templates/bdd.php');
   	<div class="error"><i class="fas fa-times"></i> ERREUR</div>
 	<section id="inscription">
 		<img src="img/toWatchListLogo.png">
-    <a href="index.php">Retour à la page principale</a>
+    	<a href="index.php">Retour à l'accueil</a>
 	</section>
 </body>
 </html>
