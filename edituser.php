@@ -51,25 +51,28 @@ if (isset($_GET['attempt'])) {
   <?php include('templates/head.php'); ?>
   <meta charset="utf-8">
 </head>
-<body class="user">
-  <div class="cache"></div>
-  <?php if (isset($message)) {
-      echo '<div class="error"><i class="fas fa-times"></i> '.$message.'</div>';
-  } ?>
-  <section id="inscription">
-    <img src="img/toWatchListLogo.png">
-    <form method="post" action="edituser.php?attempt=ok" enctype="multipart/form-data">
-      <p>Changer de photo de profil : </p>
-      <label id="imgInpLabel" for="imgInp">Choisir une image</label>
-      <input id="imgInp" type="file" name="image">
-      <label for="pseudoIns">Modifier un pseudo</label>
-      <input type="text" name="login">
-      <label for="mdp1Ins">Modifier un mot de passe</label>
-      <input type="password" name="password">
-      <label for="mdp2Ins">Confirmer le mot de passe</label>
-      <input type="password" name="passwordRepeat">
-      <input type="submit" name="btInscription">
-    </form>
-  </section>
+<body>
+  <?php include ('templates/header.php'); ?>
+  <div  class="user">
+    <div class="cache"></div>
+    <?php if (isset($message)) {
+        echo '<div class="error"><i class="fas fa-times"></i> '.$message.'</div>';
+    } ?>
+    <section id="inscription">
+      <img src="img/toWatchListLogo.png">
+      <form method="post" action="edituser.php?attempt=ok" enctype="multipart/form-data">
+        <p>Changer de photo de profil : </p>
+        <label id="imgInpLabel" for="imgInp">Choisir une image</label>
+        <input id="imgInp" type="file" name="image">
+        <label for="pseudoIns">Modifier un pseudo</label>
+        <input type="text" name="login">
+        <label for="mdp1Ins">Modifier un mot de passe</label>
+        <input type="password" name="password">
+        <label for="mdp2Ins">Confirmer le mot de passe</label>
+        <input type="password" name="passwordRepeat">
+        <input type="submit" name="btInscription">
+      </form>
+    </section>
+  </div>
 </body>
 </html>
