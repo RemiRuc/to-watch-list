@@ -27,6 +27,18 @@ body, html{
 		display: flex;
 		flex-direction: column;
 		width: 273px;
+
+		>div{
+			display: flex;
+			align-items: center;
+
+			>p{
+				margin:0;
+			}
+			>label{
+				font-size: 1em;
+			}
+		}
 	}
 
 	a{
@@ -87,6 +99,22 @@ input[type="submit"]{
     	background-color:darken(@rouge,10%);
     }
 }
+
+input[type="file"]{
+		display: none;
+	}
+#imgInpLabel {
+		margin: auto;
+		font-size: 0.8em;
+	    cursor: pointer;
+	    color: #00b1ca;
+	    font-weight: bold;
+	    padding: 20px 0px;
+	    &:hover{
+	    	color: #25a5c4;
+	    	text-decoration: underline;
+	    }
+	}
 
 
 header{
@@ -174,9 +202,6 @@ h1{
 		text-align: center;
 	    flex-shrink: 0;
 	}
-	input[type="file"]{
-		display: none;
-	}
 	input[type="submit"]{
 		margin: auto;
     	display: block;
@@ -184,18 +209,6 @@ h1{
 	>div{
 		display: flex;
 		align-items: center;
-	}
-	#imgInpLabel {
-		margin: auto;
-		font-size: 0.8em;
-	    cursor: pointer;
-	    color: #00b1ca;
-	    font-weight: bold;
-	    padding: 20px 0px;
-	    &:hover{
-	    	color: #25a5c4;
-	    	text-decoration: underline;
-	    }
 	}
 	ul{
 		list-style: none;
@@ -392,4 +405,15 @@ table#t01 th {
 	background: green;
 	border-radius: 50%;
 	padding: 5px;
+}
+
+.profilImg{
+	width: 50px;
+	height: 50px;
+	background-image: url('#');
+	background-position: center;
+	background-size: cover;
+	border: 2px solid black;
+	border-radius: 90px;
+	margin: auto;
 }
