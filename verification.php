@@ -29,13 +29,15 @@ if ( (isset($_SESSION['login'])) && (isset($_SESSION['id'])) ) {
         <title>To watch list - Verfication</title>
         <?php include('templates/head.php'); ?>
     </head>
-    <body>
+    <body class="index">
+      <div class="cache"></div>
         <!--[if lte IE 9]>
             <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience and security.</p>
         <![endif]-->
 
         <!-- Add your site or application content here -->
-        <h1>To watch list</h1>
+        <section id="connexion">        
+        <img src="img/toWatchListLogo.png">
         
 
         <?php
@@ -43,6 +45,9 @@ if ( (isset($_SESSION['login'])) && (isset($_SESSION['id'])) ) {
             ?><p><?php echo $message ?></p><?php
         }
         ?>
+        <a href="index.php">Retour à l'accueil</a>
+        </section>
+
         <script src="js/vendor/modernizr-3.5.0.min.js"></script>
         <script src="js/vendor/less.min.js"></script>
         <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
