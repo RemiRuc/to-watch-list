@@ -27,7 +27,7 @@ if ( (isset($_SESSION['login'])) && (isset($_SESSION['id'])) ) {
         <meta charset="utf-8">
         <meta http-equiv="x-ua-compatible" content="ie=edge">
         <title>To watch list - Verfication</title>
-        <?php include('templates/head.php') ?>
+        <?php include('templates/head.php'); ?>
     </head>
     <body>
         <!--[if lte IE 9]>

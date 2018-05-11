@@ -11,10 +11,10 @@ include('templates/bdd.php');
 </head>
 <body class="index">
   <div class="cache"></div>
-  	<div class="error"><i class="fas fa-times"></i> Vous n'êtes pas connecté.</div>
+  	<div class="error"><i class="fas fa-times"></i> ERREUR</div>
 	<section id="inscription">
 		<img src="img/toWatchListLogo.png">
-    <a href="index.php">Retour à la page connexion</a>
+    <a href="index.php">Retour à la page principale</a>
 	</section>
 </body>
 </html>

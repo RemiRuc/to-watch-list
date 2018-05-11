@@ -42,9 +42,6 @@ include('templates/bdd.php');
 							}
 						}
 						header('Location: user.php');
-
-
-
 					} else {$message="Erreur lors de l'importation.";}
 				} else {$message= "Le type de fichier n'est pas bon";}
 			} else {$message= "Votre photo est trop grande";}
