@@ -59,7 +59,7 @@ include('templates/bdd.php');
 	                    	<h2><a href="series.php?id=<?php echo $serie['idSerie'] ?>"><?php echo $serie['nomSerie'] ?></a></h2>
 	                    	<h3><?php echo $vu."/".$total; ?></h3>
 	                    	<div class="series-modif">
-	                    		<a href="#"><i class="fas fa-edit"></i></a>
+	                    		<a href="editserie.php?id=<?php echo $serie['idSerie'] ?>"><i class="fas fa-edit"></i></a>
 		                    	<a href="removeserie.php?id=<?php echo $serie['idSerie'] ?>"><i class="fas fa-trash-alt"></i></a>
 	                    	</div>
 	                    </div>
