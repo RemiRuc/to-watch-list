@@ -82,8 +82,11 @@ if ( (isset($_SESSION['login'])) && (isset($_SESSION['id'])) ) {
 	<section id="inscription">
 		<img src="img/toWatchListLogo.png">
 		<form method="post" action="Inscription.php" enctype="multipart/form-data">
-      <p>Photo de profil : </p>
-      <label id="imgInpLabel" for="imgInp">Choisir une image</label>
+      <div>
+        <p>Photo de profil : </p>
+        <label id="imgInpLabel" for="imgInp">Changer</label>
+        <div class="profilImg"></div>
+      </div>
       <input id="imgInp" type="file" name="image">
 			<label for="pseudoIns">Entrez un pseudo</label>
 			<input type="text" name="login">
@@ -97,6 +100,25 @@ if ( (isset($_SESSION['login'])) && (isset($_SESSION['id'])) ) {
 		</form>
     <a href="index.php">Retour à la page connexion</a>
 	</section>
+
+  <script>
+  /**IMAGE PREVIEW**/
+  function readURL(input) {
+    if (input.files && input.files[0]) {
+      var reader = new FileReader();
+
+      reader.onload = function(e) {
+        $('.profilImg').css('background-image', 'url('+e.target.result+')');
+      }
+
+      reader.readAsDataURL(input.files[0]);
+    }
+  }
+
+  $("#imgInp").change(function() {
+    readURL(this);
+  });
+  </script>
 </body>
 </html>
 
