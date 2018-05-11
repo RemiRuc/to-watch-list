@@ -13,7 +13,7 @@ include('templates/bdd.php');
 	$reponseTitre = $bdd->query($requeteTitre);
 	$titre=$reponseTitre->fetch();
 
-	$requete = $bdd->prepare('SELECT * FROM episodes WHERE idSerie=:id');
+	$requete = $bdd->prepare('SELECT * FROM episodes WHERE idSerie=:id ORDER BY numEpisode ASC');
 	$requete->execute(array('id' => $_GET['id']));
 
 	$episodes=$requete->fetchAll();
@@ -50,9 +50,7 @@ include('templates/bdd.php');
 		}
 		?>
 		</ul>		
-
 	</div>
-
 
 	<script type="text/javascript">
 		var idSerie=<?php echo $_GET['id']; ?>;

@@ -50,7 +50,6 @@ include('templates/bdd.php');
 			} else {$message= "Votre photo est trop grande";}
 		}else{$message="Veuillez remplir tous les champs du formulaire";}
 	}
-		
 	?>
 <!DOCTYPE html>
 <html>

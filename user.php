@@ -14,13 +14,13 @@ include('templates/bdd.php');
 	</head>
 	<body>
 		<?php include ('templates/header.php'); ?>
-		<h1>Salut <?php echo $_SESSION['login']; ?> !</h1>
+		<?php 
+			$requete = $bdd->prepare('SELECT * FROM series WHERE idUser=:idUser');
+			$requete->execute(array('idUser' => $_SESSION["id"]));
+			$series=$requete->fetchAll();
+		?>
+		<h1><a href="edituser.php"><?php echo $_SESSION['login']; ?></a></h1>
 		<div id="liste">
-			<?php 
-				$requete = $bdd->prepare('SELECT * FROM series WHERE idUser=:idUser');
-				$requete->execute(array('idUser' => $_SESSION["id"]));
-				$series=$requete->fetchAll();
-			?>
 				<?php
 					foreach($series as $serie){
 						$requete2 = $bdd->prepare('SELECT vu, count(*) as total FROM `episodes` WHERE `idSerie`=:idSerie GROUP BY vu');
@@ -59,7 +59,7 @@ include('templates/bdd.php');
 	                    	<h2><a href="series.php?id=<?php echo $serie['idSerie'] ?>"><?php echo $serie['nomSerie'] ?></a></h2>
 	                    	<h3><?php echo $vu."/".$total; ?></h3>
 	                    	<div class="series-modif">
-	                    		<a href="#"><i class="fas fa-edit"></i></a>
+	                    		<a href="editserie.php?id=<?php echo $serie['idSerie'] ?>"><i class="fas fa-edit"></i></a>
 		                    	<a href="removeserie.php?id=<?php echo $serie['idSerie'] ?>"><i class="fas fa-trash-alt"></i></a>
 	                    	</div>
 	                    </div>
