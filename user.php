@@ -20,10 +20,6 @@ include('templates/bdd.php');
 				$requete = $bdd->prepare('SELECT * FROM series WHERE idUser=:idUser');
 				$requete->execute(array('idUser' => $_SESSION["id"]));
 				$series=$requete->fetchAll();
-
-				if (count($series)==0) {
-					echo "<a href='createserie.php'>Créer votre première série !</a>";
-				} else {
 			?>
 				<?php
 					foreach($series as $serie){
@@ -84,10 +80,6 @@ include('templates/bdd.php');
 	                    </div>
 					</div>
 				</div>
-			<?php
-			}
-
-			?>
 		</div>
 	
 	</body>
