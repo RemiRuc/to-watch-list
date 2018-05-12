@@ -75,7 +75,7 @@ if ((isset($_GET['attempt']))&&(isset($_SESSION['id'])) ) {
         <li id="loginLi">Modifier son pseudo </li>
         <li id="imgLi">Changer de photo de profil</li>
         <li id="passwordLi">Modifier son mot de passe</li>
-        <li id="removeLi">Supprimer son compte</li>
+        <li id="removeLi"><a id="removeuser" href="removeuser.php" onclick="if(window.confirm('Voulez-vous vraiment supprimer votre compte ?')){return true;}else{return false;}">Supprimer son compte</a></li>
       </ul>
       <div id="sliderForm">
         
