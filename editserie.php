@@ -6,6 +6,7 @@ include('templates/bdd.php');
 
 	<?php
 	if (isset($_GET['id'])) {
+		if (isset($_GET['attempt'])) {
 		$id = $_GET['id'];
 		if ((isset($_POST['nomSerie']))&&(isset($_POST['nbrSaison']))&&(isset($_POST['saison1']))&&(isset($_SESSION['id']))&&(isset($_FILES['image']))&& (isset($_FILES['image']['name'])) && (!empty($_POST['nomSerie']))) {
 			$nom=$_POST['nomSerie'];
@@ -52,6 +53,7 @@ include('templates/bdd.php');
 			} else {$message= "Votre photo est trop grande";}
 		}else{$message="Veuillez remplir tous les champs du formulaire";}
 	}
+	}
 	?>
 	
 <!DOCTYPE html>
@@ -72,7 +74,7 @@ include('templates/bdd.php');
 			    echo '<div class="error alert_pages"><i class="fas fa-times"></i> '.$message.'</div>';
 			}
 		?>
-		<form id="formSerie" method="post" action="editserie.php?id=<?php echo $_GET['id'] ?>" enctype="multipart/form-data">
+		<form id="formSerie" method="post" action="editserie.php?attempt=ok&amp;id=<?php echo $_GET['id'] ?>" enctype="multipart/form-data">
 				<div>
 					<label>Nom de la serie :</label>
 					<input type="text" name="nomSerie">
