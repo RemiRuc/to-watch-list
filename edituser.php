@@ -66,10 +66,11 @@ if ((isset($_GET['attempt']))&&(isset($_SESSION['id'])) ) {
   <?php include ('templates/header.php'); ?>
   <div  class="user">
     <div class="cache"></div>
-    <?php if (isset($message)) {
-        echo '<div class="error"><i class="fas fa-times"></i> '.$message.'</div>';
-    } ?>
+      
     <section id="inscription">
+      <?php if (isset($message)) {
+          echo '<div class="error"><i class="fas fa-times"></i> '.$message.'</div>';
+      } ?>
       <ul>
         <li id="loginLi">Modifier son pseudo </li>
         <li id="imgLi">Changer de photo de profil</li>

@@ -93,10 +93,10 @@ if ( (isset($_SESSION['login'])) && (isset($_SESSION['id'])) ) {
 </head>
 <body class="index">
   <div class="cache"></div>
-  <?php if (isset($message)) {
-      echo '<div class="error"><i class="fas fa-times"></i> '.$message.'</div>';
-  } ?>
 	<section id="inscription">
+    <?php if (isset($message)) {
+        echo '<div class="error"><i class="fas fa-times"></i> '.$message.'</div>';
+    } ?>
 		<img src="img/toWatchListLogo.png">
 		<form method="post" action="Inscription.php" enctype="multipart/form-data">
       <div>
