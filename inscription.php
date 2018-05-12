@@ -48,10 +48,27 @@ if ( (isset($_SESSION['login'])) && (isset($_SESSION['id'])) ) {
                         $header.='Content-Transfer-Encoding: 8bit';
                         $mailBody="
                         <html>
-                        <body>
-                        <a href=towatchlist.local/verification.php?token=".$token.">Vérifiez votre compte</a>
-                        </body>
-                        </html>
+                          <head>
+                            
+                          </head>
+                          <body>
+                            <style type='text/css'>
+                              header{
+                                background-color: #C90505;
+                                padding: 10px;
+                                img{
+                                  display: block;
+                                  margin: auto;
+                                }
+                              }
+                            </style>
+                            <header><img src='http://towatchlist.local/img/toWatchListLogoWhite.png'></header>
+                            <h2>Salut ".$login." !</h2>
+                            <p>Tu vient de t'inscrire sur To Watch List. Pour activer ton compte, <a href=towatchlist.local/verification.php?token=".$token.">Clique sur ce lien</a> ou entre l'adresse suivante dans ta barre de recherche :</p>
+                            <p>towatchlist.local/verification.php?token=".$token."</p>
+                            <p>Bonne visite sur notre site,<br>L'équipe de To Watch List</p>
+                          </body>
+                          </html>
                          ";
                         mail($mail, 'To watch list - Verification de compte', $mailBody,$header);
                         header('Location: index.php?subscribe=done');
