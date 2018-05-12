@@ -43,33 +43,33 @@ include('templates/bdd.php');
 			<h1 id="series-titre"><?php echo $titre['titre']; ?></h1>
 			<div id="series-list">
 				<?php
-						$requete2 = $bdd->prepare('SELECT vu, count(*) as total FROM `episodes` WHERE `idSerie`=:idSerie GROUP BY vu');
-						$requete2->execute(array('idSerie' => $_GET['id']));
-						$requetTab=$requete2->fetchAll();
-						foreach ($requetTab as $key) {
-							if (count($requetTab)<2) {
-								if ($key['vu']==1) {
-									$vu=$key['total'];
-									$pasVu=0;
-								} else {
-									$vu=0;
-									$pasVu=$key['total'];
-								}
+					$requete2 = $bdd->prepare('SELECT vu, count(*) as total FROM `episodes` WHERE `idSerie`=:idSerie GROUP BY vu');
+					$requete2->execute(array('idSerie' => $_GET['id']));
+					$requetTab=$requete2->fetchAll();
+					foreach ($requetTab as $key) {
+						if (count($requetTab)<2) {
+							if ($key['vu']==1) {
+								$vu=$key['total'];
+								$pasVu=0;
 							} else {
-								if ($key['vu']==1) {
-									$vu=$key['total'];
-								} else {
-									$pasVu=$key['total'];
-								}
+								$vu=0;
+								$pasVu=$key['total'];
+							}
+						} else {
+							if ($key['vu']==1) {
+								$vu=$key['total'];
+							} else {
+								$pasVu=$key['total'];
 							}
 						}
-						$total=$vu+$pasVu;
-						$pourcent=($vu/$total)*100;
-						if ($pourcent==0) {
-							echo "<div class='progress-bar'></div>";
-						}else{
-							echo "<div class='progress-bar' style='width:".$pourcent."%;background:green;'></div>";
-						}
+					}
+					$total=$vu+$pasVu;
+					$pourcent=($vu/$total)*100;
+					if ($pourcent==0) {
+						echo "<div class='progress-bar'></div>";
+					}else{
+						echo "<div class='progress-bar' style='width:".$pourcent."%;background:green;'></div>";
+					}
 						
 				?>
 				<img id="series-img" src="<?php echo$image['lien']; ?>">
