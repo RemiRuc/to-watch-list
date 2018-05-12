@@ -20,6 +20,10 @@ if ( (isset($_POST['login'])) && (isset($_POST['password'])) ) {
                     if (password_verify($password, $result['mdp'])) {
                         $_SESSION['login']=$login;
                         $_SESSION['id']= $result['idUser'];
+                        $req = $bdd->prepare('SELECT lien_user FROM image_user WHERE idImage_user = :id LIMIT 1');
+                        $req->execute([':id' => $result['idImage_user']]);
+                        $result=$req->fetch();
+                        $_SESSION['img']=$result['lien_user'];
                         header('Location: user.php');
                     } else {$message="Le mot de passe ou le login n'est pas valide";}
                 } else {$message="Votre compte n'a pas encore été validé, vérifiez votre boite mail.";}

@@ -53,6 +53,25 @@ body, html{
 	    	border-bottom: red 5px solid;
 	    }
 	}
+
+	#sliderForm{
+		height: 0px;
+    	overflow: hidden;
+    	transition: all 0.7s;
+	}
+	ul{
+		list-style: none;
+	    padding: 0;
+	    text-align: center;
+	    font-size: 1.2em;
+	    li{
+	    	padding: 10px 0px;
+	    	cursor: pointer;
+	    	&:hover{
+	    		text-decoration:underline;
+	    	}
+	    }
+	}
 }
 
 input[type="text"],
@@ -130,6 +149,7 @@ header{
 	}
 	a{
 		display: flex;
+		font-size: 1.3em;
 		align-items: center;
 		height: 50px;
 		background-color: darken(@rouge,10%);
@@ -140,6 +160,25 @@ header{
 		&:hover{
 			background-color: darken(@rouge,20%);
 		}
+	}
+	>div{
+		position: relative;
+		&:hover ul{
+			max-height:500px;
+		}
+	}
+
+	ul{
+		padding: 0;
+		list-style: none;
+		margin: 0;
+		position: absolute;
+		z-index: 1000;
+		max-height: 0;
+		left: 0;
+		right: 0;
+		overflow: hidden;
+		transition: all 1s;
 	}
 
 	.header-img-a{
@@ -386,6 +425,10 @@ table#t01 th {
 	border: 2px solid black;
 	border-radius: 90px;
 	margin: auto;
+
+	header &{
+		margin-left: 20px;
+	}
 }
 /****************series.php*******************/
 #series-contenu{
