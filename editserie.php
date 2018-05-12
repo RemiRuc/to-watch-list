@@ -5,10 +5,16 @@ include('templates/bdd.php');
 	?>
 
 	<?php
-	if (isset($_GET['attempt'])) {
+	if (isset($_GET['id'])) {
+		$id = $_GET['id'];
 		if ((isset($_POST['nomSerie']))&&(isset($_POST['nbrSaison']))&&(isset($_POST['saison1']))&&(isset($_SESSION['id']))&&(isset($_FILES['image']))&& (isset($_FILES['image']['name'])) && (!empty($_POST['nomSerie']))) {
 			$nom=$_POST['nomSerie'];
 			$nbrSaison=$_POST['nbrSaison'];
+			$req = $bdd->prepare('DELETE FROM episodes
+						  WHERE idSerie=:idSerie');
+			$req->execute(array(
+			'idSerie' => $_GET['id'],
+			));
 			for ($i=0; $i < $nbrSaison; $i++) {
 				if (!isset($_POST["saison".($i+1)])) {
 					$nbrEpisodes[]=1;
@@ -25,20 +31,19 @@ include('templates/bdd.php');
 					$resultat = move_uploaded_file($_FILES['image']['tmp_name'], $lien);
 					if ($resultat) {
 						$lien="img/series/".$_FILES['image']['name'];
-						$sql= $bdd->prepare("UPDATE `image` SET `lien` = '$lien'");
+						$sql= $bdd->prepare("UPDATE `image` SET `lien` = '$lien' WHERE idImage = (SELECT idImage FROM series WHERE idSerie= $id)");
 						$sql->execute();
 						$imageId=$bdd->lastInsertId();
 
-						$req = $bdd->prepare('UPDATE series SET nomSerie = :nomSerie');
-						$req->execute(array('nomSerie' => $nom));
-						$serieId=$bdd->lastInsertId();
+						$req = $bdd->prepare('UPDATE series SET nomSerie = :nomSerie WHERE idSerie = :idSerie ');
+						$req->execute(array('nomSerie' => $nom, 'idSerie' => $id));
 						$numeroEpisode=0;
-						$req2 = $bdd->prepare('UPDATE episodes SET saison = :saison, numEpisode = :numEpisode');
+						$req2 = $bdd->prepare('INSERT INTO episodes(idSerie, idUser, saison, numEpisode) VALUES(:idSerie, :idUser, :saison, :numEpisode)');
 						for ($i=0; $i < $nbrSaison; $i++) { 
 							for ($j=0; $j < $nbrEpisodes[$i]; $j++) {
 								$numeroEpisode++;
 								$saison=$i+1;
-								$req2->execute(array('saison' => $saison, 'numEpisode' => $numeroEpisode));
+								$req2->execute(array('idSerie' => $id, 'idUser' => $_SESSION['id'], 'saison' => $saison, 'numEpisode' => $numeroEpisode));
 							}
 						}
 						header('Location: user.php');
@@ -58,47 +63,19 @@ include('templates/bdd.php');
 </head>
 <body >
 	<?php include ('templates/header.php'); ?>
+	<?php 
+	?>
 	<div class="user">
 		<div class="cache"></div>
 		<?php 
 			if (isset($message)) {
 			    echo '<div class="error alert_pages"><i class="fas fa-times"></i> '.$message.'</div>';
-			} 
-			$requete = $bdd->prepare('SELECT * FROM series WHERE idUser=:idUser');
-			$requete->execute(array('idUser' => $_SESSION["id"]));
-			$series=$requete->fetchAll();
-			foreach($series as $serie){
-				$requete2 = $bdd->prepare('SELECT vu, count(*) as total FROM `episodes` WHERE `idSerie`=:idSerie GROUP BY vu');
-				$requete2->execute(array('idSerie' => $serie['idSerie']));
-				$requetTab=$requete2->fetchAll();
-				foreach ($requetTab as $key) {
-					if (count($requetTab)<2) {
-						if ($key['vu']==1) {
-							$vu=$key['total'];
-							$pasVu=0;
-						} else {
-							$vu=0;
-							$pasVu=$key['total'];
-						}
-					} else {
-						if ($key['vu']==1) {
-							$vu=$key['total'];
-						} else {
-							$pasVu=$key['total'];
-						}
-					}
-				}
-				$total=$vu+$pasVu;
-
-				$requete3 = $bdd->prepare('SELECT * FROM `image` WHERE `idImage`= :idImage');
-				$requete3->execute(array('idImage' => $serie['idImage']));
-				$images=$requete3->fetchAll();
-				foreach($images as $image){
+			}
 		?>
-		<form id="formSerie" method="post" action="editserie.php?attempt=ok" enctype="multipart/form-data">
+		<form id="formSerie" method="post" action="editserie.php?id=<?php echo $_GET['id'] ?>" enctype="multipart/form-data">
 				<div>
 					<label>Nom de la serie :</label>
-					<input type="text" name="nomSerie" value="<?php echo $serie['nomSerie'] ?>">
+					<input type="text" name="nomSerie">
 				</div>
 				<div>
 					<p>Image de la serie :</p>
@@ -125,10 +102,6 @@ include('templates/bdd.php');
 			</ul>
 			<input type="submit" name="bouttonSerie">
 		</form>
-		<?php
-				}
-			}
-		?>
 	</div>
 
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
