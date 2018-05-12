@@ -16,12 +16,13 @@ body, html{
 	font-family: 'aurea';
 }
 #connexion, #inscription{
+	margin: 20px;
 	position: relative;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
     background: white;
-        padding: 70px 30px;
+    padding: 70px 30px;
     border-radius: 50px;
 	form{
 		display: flex;
@@ -52,6 +53,14 @@ body, html{
 	    &:hover{
 	    	border-bottom: red 5px solid;
 	    }
+	}
+
+	#removeuser{
+		text-decoration: none;
+	    color: black;
+	    margin-top: 0px;
+	    border-bottom: none;
+	    font-size: 1em;
 	}
 
 	#sliderForm{
@@ -364,6 +373,9 @@ table#t01 th {
 		}
 		.series-titre{
 			position: absolute;
+			h2:hover{
+				text-shadow: 1px 1px 2px black; 
+			}
 			a{
 				font-size: 1.6em;
 				text-align: center;
@@ -372,6 +384,9 @@ table#t01 th {
 				z-index: 19;
 				text-decoration: none;
 				text-transform: uppercase;
+				i:hover{
+					color: #c9cec9;
+				}
 			}
 			h3{
 				font-size: 2.6em;
@@ -390,6 +405,9 @@ table#t01 th {
 						background: white;
 						border-radius: 50%;
 						padding: 5px;
+						&:hover{
+							color: green;
+						}
 					}
 				}
 			}
