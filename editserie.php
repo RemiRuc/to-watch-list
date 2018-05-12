@@ -69,12 +69,12 @@ include('templates/bdd.php');
 	?>
 	<div class="user">
 		<div class="cache"></div>
-		<?php 
-			if (isset($message)) {
-			    echo '<div class="error alert_pages"><i class="fas fa-times"></i> '.$message.'</div>';
-			}
-		?>
 		<form id="formSerie" method="post" action="editserie.php?attempt=ok&amp;id=<?php echo $_GET['id'] ?>" enctype="multipart/form-data">
+			<?php 
+				if (isset($message)) {
+				    echo '<div class="error alert_pages"><i class="fas fa-times"></i> '.$message.'</div>';
+				}
+			?>
 				<div>
 					<label>Nom de la serie :</label>
 					<input type="text" name="nomSerie">
