@@ -19,7 +19,7 @@ include('templates/bdd.php');
 			$requete->execute(array('idUser' => $_SESSION["id"]));
 			$series=$requete->fetchAll();
 		?>
-		<h1><a href="edituser.php"><?php echo $_SESSION['login']; ?></a></h1>
+		<h1>Salut <?php echo $_SESSION['login']; ?>, voici tes séries :</h1>
 		<div id="liste">
 				<?php
 					foreach($series as $serie){
