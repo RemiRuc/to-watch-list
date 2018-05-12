@@ -60,7 +60,7 @@ include('templates/bdd.php');
 	                    	<h3><?php echo $vu."/".$total; ?></h3>
 	                    	<div class="series-modif">
 	                    		<a href="editserie.php?id=<?php echo $serie['idSerie'] ?>"><i class="fas fa-edit"></i></a>
-		                    	<a href="removeserie.php?id=<?php echo $serie['idSerie'] ?>"><i class="fas fa-trash-alt"></i></a>
+		                    	<a href="removeserie.php?id=<?php echo $serie['idSerie'] ?>" onclick="if(window.confirm('Voulez-vous vraiment supprimer cette série ?')){return true;}else{return false;}""><i class="fas fa-trash-alt"></i></a>
 	                    	</div>
 	                    </div>
 					</div>
