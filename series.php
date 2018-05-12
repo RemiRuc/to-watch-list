@@ -13,6 +13,11 @@ include('templates/bdd.php');
 	$reponseTitre = $bdd->query($requeteTitre);
 	$titre=$reponseTitre->fetch();
 
+	$requeteImage = "SELECT lien FROM image WHERE idImage = (SELECT idImage FROM series WHERE idSerie='".$_GET["id"]."')";
+	//$reponse = $bdd->query($requete);
+	$reponseImage = $bdd->query($requeteImage);
+	$image=$reponseImage->fetch();
+
 	$requete = $bdd->prepare('SELECT * FROM episodes WHERE idSerie=:id ORDER BY numEpisode ASC');
 	$requete->execute(array('id' => $_GET['id']));
 
@@ -32,25 +37,65 @@ include('templates/bdd.php');
 </head>
 <body>
 	<?php include ('templates/header.php'); ?>
-	<h1><?php echo $titre['titre']; ?> !</h1>
-	<div id="liste">
-		<ul>
-			<?php
-			$actualSeason=1;
-		foreach($episodes as $episode){
-			if ($episode['saison']!==$actualSeason) {
-				$actualSeason=$episode['saison'];
-				echo "<h2>saison ".$actualSeason."</h2>";
-			}
-			if ($episode['vu']==0) {
-				echo "<li id='".$episode['numEpisode']."' class='episodeList pasVu'>Episode ".$episode['numEpisode']."</li>";
-			} else {
-				echo "<li id='".$episode['numEpisode']."' class='episodeList vu'>Episode ".$episode['numEpisode']."</li>";
-			}
-		}
-		?>
-		</ul>		
+	<div class="user">
+		<div class="cache"></div>
+		<div id="series-contenu">
+			<h1 id="series-titre"><?php echo $titre['titre']; ?></h1>
+			<div id="series-list">
+				<?php
+						$requete2 = $bdd->prepare('SELECT vu, count(*) as total FROM `episodes` WHERE `idSerie`=:idSerie GROUP BY vu');
+						$requete2->execute(array('idSerie' => $_GET['id']));
+						$requetTab=$requete2->fetchAll();
+						foreach ($requetTab as $key) {
+							if (count($requetTab)<2) {
+								if ($key['vu']==1) {
+									$vu=$key['total'];
+									$pasVu=0;
+								} else {
+									$vu=0;
+									$pasVu=$key['total'];
+								}
+							} else {
+								if ($key['vu']==1) {
+									$vu=$key['total'];
+								} else {
+									$pasVu=$key['total'];
+								}
+							}
+						}
+						$total=$vu+$pasVu;
+						$pourcent=($vu/$total)*100;
+						if ($pourcent==0) {
+							echo "<div class='progress-bar'></div>";
+						}else{
+							echo "<div class='progress-bar' style='width:".$pourcent."%;background:green;'></div>";
+						}
+						
+				?>
+				<img id="series-img" src="<?php echo$image['lien']; ?>">
+				<div id="series-liste">
+					<ul>
+						<?php
+						$actualSeason=1;
+					foreach($episodes as $episode){
+						if ($episode['saison']!==$actualSeason) {
+							$actualSeason=$episode['saison'];
+							echo "<h2>saison ".$actualSeason."</h2>";
+						}
+						if ($episode['vu']==0) {
+							echo "<li id='".$episode['numEpisode']."' class='episodeList pasVu'><p>Episode ".$episode['numEpisode']."</p><p><i class='fas fa-eye'></i></p></li>";
+						} else {
+							echo "<li id='".$episode['numEpisode']."' class='episodeList vu'><p>Episode ".$episode['numEpisode']."</p><p><i class='fas fa-eye'></i></p></li>";
+						}
+					}
+					?>
+					</ul>		
+				</div>
+			</div>
+		</div>
 	</div>
+		
+		
 
 	<script type="text/javascript">
 		var idSerie=<?php echo $_GET['id']; ?>;
@@ -94,6 +139,7 @@ include('templates/bdd.php');
 			    });
     		}
 		});
+
 	</script>
 
 </body>

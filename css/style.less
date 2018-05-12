@@ -149,43 +149,13 @@ header{
 h1{
 	text-align: center;
 }
-#liste{
-	ul{
-		list-style: none;
-		padding: 0;
-		li{
-			border-top: solid black 2px;
-			border-bottom: solid black 2px;
-			a{
-				padding: 10px 0px;
-				display: block;
-				text-align: center;
-				text-decoration: none;
-				font-size: 1.5em;
-
-			}
-		}
-	}
-}
-
-.episodeList{
-	padding: 20px;
-}
-
-.vu{
-	background-color: green;
-}
-
-.pasVu{
-	background-color: red;
-}
 
 #formSerie{
 	z-index: 1;
 	background: white;
     padding: 70px 30px;
     border-radius: 50px;
-	    font-size: 1.5em;
+	font-size: 1.5em;
 	label{
 	    display: block;
     	text-align: center;
@@ -416,4 +386,113 @@ table#t01 th {
 	border: 2px solid black;
 	border-radius: 90px;
 	margin: auto;
+}
+/****************series.php*******************/
+#series-contenu{
+	z-index: 1;
+	background: white;
+    border-radius: 50px;
+    margin: 20px;
+    padding: 10px;
+}
+#series-titre{
+	text-transform: uppercase;
+	font-size: 3em;
+}
+#series-list{
+	margin: auto;
+	width: 90%;
+	.progress-bar{
+		margin-bottom: 20px;
+		height: 10px;
+		width: 100%;
+		background: black;
+	}
+	#series-img{
+		width: 35%;
+		display: inline-block;
+	}
+	#series-liste{
+		width: 35%;
+		float: right;
+	    height: 300px;
+	    vertical-align: top;
+	    display: inline-block;
+	    border: 1px solid black;
+	    border-radius: 3px;
+	    padding: 10px;
+	    overflow-y: scroll;
+		ul{
+			list-style: none;
+			padding: 0;
+			li{
+				a{
+					padding: 10px 0px;
+					display: block;
+					text-align: center;
+					text-decoration: none;
+					font-size: 1.5em;
+
+				}
+			}
+		}
+	}
+}
+
+.episodeList{
+	padding: 10px;
+}
+
+.vu{
+	background-color: green;
+	border-bottom: 1px solid black;
+	p:first-child{
+	    width: 30%;
+	    margin: 0;
+	    display: inline-block;
+	}
+	p:last-child{
+		text-align: right;
+	    width: 70%;
+	    margin: 0;
+	    display: inline-block;
+		i{
+			color: white;
+		}
+	}
+	
+}
+
+.pasVu{
+	background-color: red;
+	border-bottom: 1px solid black;
+	p:first-child{
+	    width: 30%;
+	    margin: 0;
+	    display: inline-block;
+	}
+	p:last-child{
+		text-align: right;
+	    width: 70%;
+	    margin: 0;
+	    display: inline-block;
+		i{
+		}
+	}
+}
+#liste{
+	ul{
+		list-style: none;
+		padding: 0;
+		li{
+			a{
+				padding: 10px 0px;
+				display: block;
+				text-align: center;
+				text-decoration: none;
+				font-size: 1.5em;
+
+			}
+		}
+	}
 }

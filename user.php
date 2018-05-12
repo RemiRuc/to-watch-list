@@ -49,6 +49,7 @@ include('templates/bdd.php');
 						$requete3->execute(array('idImage' => $serie['idImage']));
 						$images=$requete3->fetchAll();
 						foreach($images as $image){
+
 				?>
 				<div class="series">
 					<div class="series-img">
