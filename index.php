@@ -57,6 +57,9 @@ if (isset($_GET['subscribe'])) {
 		</form>
 		<a href="inscription.php">S'inscrire</a>
 	</section>
+    <footer>
+    <a href="mentionslegales.php">Mentions légales</a>
+</footer>
 
 </body>
 </html>

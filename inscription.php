@@ -104,15 +104,15 @@ if ( (isset($_SESSION['login'])) && (isset($_SESSION['id'])) ) {
         <label id="imgInpLabel" for="imgInp">Changer</label>
         <div class="profilImg"></div>
       </div>
-      <input id="imgInp" type="file" name="image">
+      <input  id="imgInp" type="file" name="image">
 			<label for="pseudoIns">Entrez un pseudo</label>
-			<input type="text" name="login">
+			<input placeholder="Entre 4 et 20 caractères" type="text" name="login">
 			<label for="mailIns">Entrez un mail</label>
-			<input type="text" name="mail">
+			<input placeholder="mail@example.com" type="text" name="mail">
 			<label for="mdp1Ins">Entrez un mot de passe</label>
-			<input type="password" name="password">
+			<input placeholder="Entre 4 et 20 caractères" type="password" name="password">
 			<label for="mdp2Ins">Répétez le mot de passe</label>
-			<input type="password" name="passwordRepeat">
+			<input placeholder="Entrez votre mot de passe" type="password" name="passwordRepeat">
 			<input type="submit" name="btInscription">
 		</form>
     <a href="index.php">Retour à la page connexion</a>

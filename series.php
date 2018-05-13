@@ -142,6 +142,10 @@ include('templates/bdd.php');
 
 	</script>
 
+	<script>
+		$(".user").css("background-image","url('/<?php echo $image['lien']; ?>')");
+	</script>
+
 </body>
 </html>
 
