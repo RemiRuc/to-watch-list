@@ -6,16 +6,25 @@ include('templates/bdd.php');
 
 	<?php
 	if (isset($_GET['id'])) {
+
+		$req = $bdd->prepare('SELECT * FROM series WHERE idSerie = :idSerie LIMIT 1');
+        $req->execute([':idSerie' => $_GET['id']]);
+        $serie=$req->fetch();
+
+        $req = $bdd->prepare('SELECT lien FROM image WHERE idImage = :idImage LIMIT 1');
+        $req->execute([':idImage' => $serie['idImage']]);
+        $image=$req->fetch();
+
+        $req = $bdd->prepare('SELECT COUNT(*) as total FROM episodes WHERE idSerie=:idSerie GROUP BY saison');
+        $req->execute([':idSerie' => $_GET['id']]);
+        $countSerie=$req->fetchAll();
+
 		if (isset($_GET['attempt'])) {
 		$id = $_GET['id'];
 		if ((isset($_POST['nomSerie']))&&(isset($_POST['nbrSaison']))&&(isset($_POST['saison1']))&&(isset($_SESSION['id']))&&(isset($_FILES['image']))&& (isset($_FILES['image']['name'])) && (!empty($_POST['nomSerie']))) {
 			$nom=$_POST['nomSerie'];
 			$nbrSaison=$_POST['nbrSaison'];
-			$req = $bdd->prepare('DELETE FROM episodes
-						  WHERE idSerie=:idSerie');
-			$req->execute(array(
-			'idSerie' => $_GET['id'],
-			));
+			
 			for ($i=0; $i < $nbrSaison; $i++) {
 				if (!isset($_POST["saison".($i+1)])) {
 					$nbrEpisodes[]=1;
@@ -23,18 +32,13 @@ include('templates/bdd.php');
 					$nbrEpisodes[]=$_POST["saison".($i+1)];
 				}
 			}
-			$tailleMax=2097152;
-			$extensionsValides= array('jpg','jpeg','png','gif');
-			if ($_FILES['image']['size']<=$tailleMax) {
-				$extensionUpload = strtolower(substr(strrchr($_FILES['image']['name'], '.'), 1));
-				if (in_array($extensionUpload, $extensionsValides)) {
-					$lien="img/series/".$_FILES['image']['name'];
-					$resultat = move_uploaded_file($_FILES['image']['tmp_name'], $lien);
-					if ($resultat) {
-						$lien="img/series/".$_FILES['image']['name'];
-						$sql= $bdd->prepare("UPDATE `image` SET `lien` = '$lien' WHERE idImage = (SELECT idImage FROM series WHERE idSerie= $id)");
-						$sql->execute();
-						$imageId=$bdd->lastInsertId();
+			
+
+						$req = $bdd->prepare('DELETE FROM episodes
+						  WHERE idSerie=:idSerie');
+						$req->execute(array(
+						'idSerie' => $_GET['id'],
+						));
 
 						$req = $bdd->prepare('UPDATE series SET nomSerie = :nomSerie WHERE idSerie = :idSerie ');
 						$req->execute(array('nomSerie' => $nom, 'idSerie' => $id));
@@ -48,12 +52,33 @@ include('templates/bdd.php');
 							}
 						}
 						header('Location: user.php');
+					
+		}else{$message="Veuillez remplir tous les champs du formulaire";}
+
+
+		if (isset($_FILES['image'])){
+			$tailleMax=2097152;
+			$extensionsValides= array('jpg','jpeg','png','gif');
+			if ($_FILES['image']['size']<=$tailleMax) {
+				$extensionUpload = strtolower(substr(strrchr($_FILES['image']['name'], '.'), 1));
+				if (in_array($extensionUpload, $extensionsValides)) {
+					$lien="img/series/".$_FILES['image']['name'];
+					$resultat = move_uploaded_file($_FILES['image']['tmp_name'], $lien);
+					if ($resultat) {
+						$lien="img/series/".$_FILES['image']['name'];
+						$sql= $bdd->prepare("UPDATE `image` SET `lien` = '$lien' WHERE idImage = (SELECT idImage FROM series WHERE idSerie= $id)");
+						$sql->execute();
+						$imageId=$bdd->lastInsertId();
 					} else {$message="Erreur lors de l'importation.";}
 				} else {$message= "Le type de fichier n'est pas bon";}
 			} else {$message= "Votre photo est trop grande";}
-		}else{$message="Veuillez remplir tous les champs du formulaire";}
+		}
 	}
 	}
+	?>
+
+	<?php
+		
 	?>
 	
 <!DOCTYPE html>
@@ -77,7 +102,7 @@ include('templates/bdd.php');
 			?>
 				<div>
 					<label>Nom de la serie :</label>
-					<input type="text" name="nomSerie">
+					<input value="<?php echo $serie['nomSerie'] ?>" type="text" name="nomSerie">
 				</div>
 				<div>
 					<p>Image de la serie :</p>
@@ -88,19 +113,23 @@ include('templates/bdd.php');
 				<div>
 					<label>Nombre de saison :</label>
 					<select id="nbrSaison" name="nbrSaison">
-						<option value="1">1</option>
-					    <option value="2">2</option>
-					    <option value="3">3</option>
-					    <option value="4">4</option>
-					    <option value="5">5</option>
-					    <option value="6">6</option>
-					    <option value="7">7</option>
-					    <option value="8">8</option>
-					    <option value="9">9</option>
+						<option <?php if (count($countSerie)==1) {echo "selected";} ?> value="1">1</option>
+					    <option <?php if (count($countSerie)==2) {echo "selected";} ?> value="2">2</option>
+					    <option <?php if (count($countSerie)==3) {echo "selected";} ?> value="3">3</option>
+					    <option <?php if (count($countSerie)==4) {echo "selected";} ?> value="4">4</option>
+					    <option <?php if (count($countSerie)==5) {echo "selected";} ?> value="5">5</option>
+					    <option <?php if (count($countSerie)==6) {echo "selected";} ?> value="6">6</option>
+					    <option <?php if (count($countSerie)==7) {echo "selected";} ?> value="7">7</option>
+					    <option <?php if (count($countSerie)==8) {echo "selected";} ?> value="8">8</option>
+					    <option <?php if (count($countSerie)==9) {echo "selected";} ?> value="9">9</option>
 					</select>
 				</div>
 			<ul id="nbrEpisode">
-				
+				<?php
+					for ($i=0; $i < count($countSerie); $i++) { 
+						echo '<li><label>Saison '.($i+1).'</label> <div><input class="nbrEpisode" type="number" value='.$countSerie[$i]['total'].' min="1" max="30" name="saison'.($i+1).'"> épisode(s)</div></li>';
+					}
+				?>
 			</ul>
 			<input type="submit" name="bouttonSerie">
 		</form>
@@ -109,7 +138,7 @@ include('templates/bdd.php');
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <script type="text/javascript">
 	/**FORM**/
-	$("#nbrEpisode").append('<li><label>Saison 1</label><div><input class="nbrEpisode" type="number" value="1" min="1" max="30" name="saison1"> épisode(s)</div></li>');
+	//$("#nbrEpisode").append('<li><label>Saison 1</label><div><input class="nbrEpisode" type="number" value="1" min="1" max="30" name="saison1"> épisode(s)</div></li>');
 	$('#nbrSaison').change(function() {
 		var nbr=$('#nbrSaison').val();
 		if ((nbr>=1)&&(nbr<=9)) {
@@ -129,7 +158,7 @@ include('templates/bdd.php');
 	});
 
 	/**IMAGE PREVIEW**/
-	$('.user').css('background-image', 'none');
+	$('.user').css('background-image', 'url("/<?php echo $image['lien']?>")');
 	$('.cache').css('background-color', 'grey');
 
 	function readURL(input) {
